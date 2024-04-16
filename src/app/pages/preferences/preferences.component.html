@@ -1,0 +1,89 @@
+<div class="container">
+    <div class="services">
+        <h2>Preferencias</h2>
+    </div>
+    <form [formGroup]="formGroup" (ngSubmit)="update()">
+        <div *ngIf="authService.isAdmin()" class="row mt-5 col-5">
+            <label for="time-metadata">Tiempo Ejecución Crawler en segundos:</label>
+            <input type="number" class="form-control" id="time-metadata" formControlName="timeMetadata">
+        </div>
+
+        <div class="row mt-5" *ngIf="!authService.isAdmin()">
+            <div class="col-12">
+                <div class="shadow pt-5 pr-4 pb-4">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-md-1 col-1 mx-auto">
+                                    <img [src]="iconUrl" *ngIf="iconUrl" style="align-self: center;"
+                                        [ngStyle]="{'height': iconSize+'px'}">
+                                </div>
+                                <div class="col-md-10 col-10">
+                                    <div class="form-group"
+                                        [ngStyle]="{'border-color': color, 'border-style': 'solid', 'border-width': borderWith+'px', 'border-radius': borderRadius+'px'}">
+                                        <div class="input-group pl-2 pr-2 rounded-pill">
+                                            <input type="text" class="form-control border-0 rounded-pill"
+                                                [placeholder]="search" formControlName="transcript">
+                                            <button type="button" class="btn">
+                                                <fa-icon [icon]="faMic" transform="grow-5" (click)="toggleRecognition()"></fa-icon>
+                                            </button>
+                                            <button type="button" class="btn">
+                                                <fa-icon [icon]="faSearch" transform="grow-4"
+                                                    [styles]="{'color': color}">
+                                                </fa-icon>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5" *ngIf="!authService.isAdmin()">
+            <div class="col-md-4 col-12">
+                <label for="logo">Placeholder:</label>
+                <input type="text" class="form-control" id="logo" formControlName="search">
+                
+                <label for="color">Color:</label>
+                <input type="color" class="form-control-range" id="color" formControlName="color"
+                    style="background-color: transparent; width: 4em;">
+                
+                <label for="formControlRange">Tamaño de Imagen: {{ iconSize }}px</label>
+                <input type="range" class="form-control-range" min="10" max="100" step="1" id="formControlRange"
+                    formControlName="iconSize">
+                
+                <label for="logo">Logo Url:</label>
+                <input type="text" class="form-control custom-rounded" id="logo" formControlName="iconUrl">
+            </div>
+            <div class="col-md-6 col-12">
+                <label for="formControlRange">Ancho del Borde: {{ borderWith }}px</label>
+                <input type="range" class="form-control-range" min="0.0" max="2" step="0.1" id="formControlRange"
+                    formControlName="borderWith">
+                
+                <label for="formControlRange">Radio de Borde: {{ borderRadius }}px</label>
+                <input type="range" class="form-control-range" min="0" max="30" step="0.1" id="formControlRange"
+                    formControlName="borderRadius">
+            </div>
+            <div class="col-1">
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-12 col-12 text-center">
+                <button class="btn btn-outline-success btn-block m-1">Guardar</button>
+                <button type="button" class="btn btn-outline-info btn-block m-1" (click)="download()" *ngIf="!authService.isAdmin()">
+                    Descargar
+                </button>
+            </div>
+        </div>
+    </form>
+    <hr *ngIf="!authService.isAdmin()">
+    <div class="col-12" *ngIf="!authService.isAdmin()">
+        <blockquote class="blockquote text-center">
+            <p class="mb-0">Ejemplo Descarga</p>
+        </blockquote>
+        <br>
+        <pre class="shadow"><code class="pl-3 pr-5">{{htmlExample}}</code></pre>
+    </div>
+</div>

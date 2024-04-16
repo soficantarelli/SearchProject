@@ -1,0 +1,70 @@
+<div class="container">
+    <div class="services">
+        <h2>Búsquedas</h2>
+    </div>
+    <div *ngFor="let statistics of listStatistics; let i = index">
+      <div class="row mt-5">
+        <div class="col-sm-4">
+            <div class="card" >
+              <div class="card-body">
+                <h5 class="card-title">Totales</h5>
+                <p class="card-text">{{statistics.total}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Hoy</h5>
+                <p class="card-text">{{statistics.today}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Popularidad</h5>
+                <p class="card-text">{{statistics.popularity}}</p>
+              </div>
+            </div>
+          </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-sm-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Con resultados</h5>
+                <p class="card-text">{{statistics.withResult}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Sin resultados</h5>
+                <p class="card-text">{{statistics.withoutResult}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">En orden ascendente</h5>
+                <p class="card-text">{{statistics.upward}}</p>
+              </div>
+            </div>
+          </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-sm-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">En orden descendente</h5>
+                <p class="card-text">{{statistics.falling}}</p>
+              </div>
+            </div>
+          </div>
+    </div>
+    </div>
+    
+</div>

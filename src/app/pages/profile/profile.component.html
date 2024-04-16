@@ -1,0 +1,44 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-sm-12 mx-auto">
+            <div class="mb-4 mt-4">
+                <h3 class="title">Mis Datos</h3>
+            </div>
+            <form [formGroup]="formGroup" (ngSubmit)="update()">
+                <div class="mb-2">
+                    <label for="username">Usuario</label>
+                    <input id="username" type="text" class="form-control" formControlName="username">
+                </div>
+                <div class="mb-2">
+                    <label for="name">Nombre</label>
+                    <input id="name" type="text" class="form-control" formControlName="name">
+                </div>
+                <div class="mb-2">
+                    <label for="lastName">Apellido</label>
+                    <input id="lastName" type="text" class="form-control" formControlName="lastName">
+                </div>
+                <div class="mb-2">
+                    <button class="btn btn-outline-info btn-block mt-4" type="submit">Actualizar</button>
+                </div>
+            </form> 
+        </div>
+        <div class="col-md-4 col-sm-12 mx-auto">
+            <div class="mb-4 mt-4">
+                <h3 class="title">Contraseña</h3>
+            </div>
+            <form [formGroup]="formPassword" (ngSubmit)="updatePassword()">
+                <div class="mb-2">
+                    <label for="newPassword">Contraseña Nueva</label>
+                    <input id="newPassword" type="password" class="form-control" formControlName="password">
+                </div>
+                <div class="mb-1">
+                    <label for="repeatPassword">Repetir Contraseña Nueva</label>
+                    <input id="repeatPassword" type="password" class="form-control" formControlName="repeatPassword">
+                </div>
+                <div class="mb-2">
+                    <button class="btn btn-outline-info btn-block mt-4" type="submit">Actualizar</button>
+                </div>
+            </form> 
+        </div>
+    </div>
+</div>

@@ -1,0 +1,116 @@
+<div class="container">
+    <div class="services">
+        <h2>WebSites</h2>
+    </div>
+      <div class="status-service">
+        <form [formGroup]="formGroup">
+          <table class="table table-color">
+              <thead>
+                <tr>
+                  <th class="col-6">URL</th>
+                  <th class="col-1">Estado</th>
+                  <th class="col-1"></th>
+                  <th scope="col-2" class="text-center"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngIf="idToEdit == null">
+                  <td><input type="text" class="form-control" formControlName="url"></td>
+                  <td></td>
+                  <td>
+                    <button class="btn btn-outline-info btn-block form-control" (click)="validateNew()">Validar</button>
+                    <small class="text-success"
+                        *ngIf="pingTestNew == true">Exitoso</small>
+                        <small class="text-success"
+                        *ngIf="pingTestNew == false">Caido</small>
+                  </td>
+                  
+                  <td>
+                      <button class="btn btn-outline-info btn-block form-control" (click)="addWebsite()">Agregar</button>
+                  </td>
+              </tr>
+              <tr *ngIf="idToEdit != null">
+                  <td><input type="text" class="form-control" disabled></td>
+                  <td></td>
+                  <td></td>
+                  <td>
+                    <button class="btn btn-outline-info btn-block form-control" disabled>Agregar</button>
+                </td>
+              </tr>
+
+              <tr *ngFor="let website of listWebsites; let i = index">
+                  <ng-container *ngIf="idToEdit != website.idWebSite">
+                      <td>
+                          <input type="text" class="form-control" value="{{website.url}}" disabled>
+                      </td>
+                      <ng-template [ngIf]="website.up || website.indexed">
+                              <td>
+                              <h3> <span class="badge"
+                                      [ngClass]="website.indexed ? 'bg-success' : 'bg-warning'">
+                                      {{website.indexed ? 'Indexado' : 'A Indexar'}}
+                                  </span></h3>
+                              </td>
+                              <ng-template [ngIf]="idToEdit == null">
+                                  <td *ngIf="website.indexed">
+                                      <button class="btn btn-outline-info btn-block form-control" (click)="reindex(website)">Reindexar</button>
+                                  </td>
+                                  <td *ngIf="!website.indexed">
+                                      <button class="btn btn-outline-info btn-block form-control" (click)="reindex(website)" disabled>Reindexar</button>
+                                  </td>
+                              </ng-template>
+                              <td *ngIf="idToEdit != null">
+                                 <button class="btn btn-outline-info btn-block form-control" (click)="reindex(website)" disabled>Reindexar</button>
+                             </td>
+                      </ng-template>
+                      <ng-template [ngIf]="!website.up">
+                        <td>
+                        <h3> <span class="badge"
+                                [ngClass]="'bg-danger'">
+                                {{'Caído'}}
+                            </span></h3>
+                        </td>
+     
+                        <td *ngIf="idToEdit == null">
+                            <button class="btn btn-outline-info btn-block form-control" (click)="validate(website)">Validar</button>
+                            <small class="text-success"
+                            *ngIf="pingTest == true">Exitoso</small>
+                            <small class="text-success"
+                            *ngIf="pingTest == false">Caido</small>
+                        </td>
+         
+                        <td *ngIf="idToEdit != null">
+                           <button class="btn btn-outline-info btn-block form-control" disabled>Validar</button>
+                       </td>
+                </ng-template>
+                  </ng-container>
+                  <ng-container *ngIf="idToEdit == website.idWebSite">
+                      <td>
+                          <input type="text" class="form-control" value="{{website.url}}" formControlName="url">
+                      </td>
+                      <td>
+                      </td> 
+                      <td></td>
+                                            
+                  </ng-container>
+                  <ng-template [ngIf]="idToEdit != website.idWebSite">
+                      <td *ngIf="idToEdit == null">
+                          <button class="btn btn-outline-info btn-block m-1" (click)="edit(website)"><fa-icon [icon]="faEdit"></fa-icon></button>
+                          <button class="btn btn-outline-info btn-block m-1" (click)="delete(website)"><fa-icon [icon]="faTrashCan"></fa-icon></button>
+                      </td>
+                      <td *ngIf="idToEdit != null">
+                          <button class="btn btn-outline-info btn-block m-1" disabled><fa-icon [icon]="faEdit"></fa-icon></button>
+                          <button class="btn btn-outline-info btn-block m-1" disabled><fa-icon [icon]="faTrashCan"></fa-icon></button>
+                      </td>
+                  </ng-template>
+                  <ng-template [ngIf]="idToEdit == website.idWebSite">
+                      <td>
+                          <button class="btn btn-outline-info btn-block m-1" (click)="update()"><fa-icon [icon]="faCheckCircle"></fa-icon></button>
+                          <button class="btn btn-outline-info btn-block m-1" (click)="cancel()"><fa-icon [icon]="faWindowClose"></fa-icon></button>
+                      </td>
+                  </ng-template>
+                </tr>
+           </tbody>
+            </table>
+      </form>
+    </div>
+  </div>

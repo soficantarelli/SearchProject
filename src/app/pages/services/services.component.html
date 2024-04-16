@@ -1,0 +1,125 @@
+<div class="container">
+    <div class="services">
+        <h2>Servicios</h2>
+    </div>
+    <div class="status-service">
+        <form [formGroup]="formGroup">
+        <table class="table table-color">
+            <thead>
+              <tr>
+                <th class="col-2">URL</th>
+                <th class="col-1">Protocolo</th>
+                <th class="col-1">Token</th>
+                <th class="col-1">Estado</th>
+                <th class="col-1">Ping</th>
+                <th scope="col-1" style="width:10%" class="text-center"></th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr *ngIf="idToEdit == null">
+                    <td><input type="text" class="form-control" formControlName="url"></td>
+                    <td><select class="form-select"  formControlName="protocol">
+                        <option value="REST">REST</option>
+                        <option value="SOAP">SOAP</option>
+                        </select>
+                    </td>
+                    <td><input type="text" class="form-control" formControlName="token"></td>
+                    <td></td>
+                    <td><button class="btn btn-outline-info btn-block form-control" (click)="pingService()">Ping</button>
+                        <small class="text-success"
+                        *ngIf="pingTest == true">Ping exitoso</small>
+                        <small class="text-success"
+                        *ngIf="pingTest == false">Fallo ping</small>
+                    </td>
+                    <td>
+                        <button class="btn btn-outline-info btn-block form-control" (click)="addService()">Agregar</button>
+                    </td>
+                </tr>
+                <tr *ngIf="idToEdit != null">
+                    <td><input type="text" class="form-control" disabled></td>
+                    <td><input type="text" class="form-control" disabled></td>
+                    <td><input type="text" class="form-control" disabled></td>
+                    <td><input type="text" class="form-control" disabled></td>
+                    <td><input type="text" class="form-control" disabled></td>
+                </tr>
+
+                <tr *ngFor="let service of listServices; let i = index">
+                    <ng-container *ngIf="idToEdit != service.idService">
+                        <td>
+                            <input type="text" class="form-control" value="{{service.url}}" disabled>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" value="{{service.protocol}}" disabled>
+                        </td>
+                        <td><input type="text" class="form-control" value="{{service.token}}" disabled></td>
+                        <ng-template [ngIf]="service.up || service.indexed">
+                                <td>
+                                <h3> <span class="badge"
+                                        [ngClass]="service.indexed ? 'bg-success' : 'bg-warning'">
+                                        {{service.indexed ? 'Indexado' : 'A Indexar'}}
+                                    </span></h3>
+                                </td>
+                                <ng-template [ngIf]="idToEdit == null">
+                                    <td *ngIf="service.indexed">
+                                        <button class="btn btn-outline-info btn-block form-control" (click)="reindex(service)">Reindexar</button>
+                                    </td>
+                                    <td *ngIf="!service.indexed">
+                                        <button class="btn btn-outline-info btn-block form-control" (click)="reindex(service)" disabled>Reindexar</button>
+                                    </td>
+                                </ng-template>
+                                <td *ngIf="idToEdit != null">
+                                   <button class="btn btn-outline-info btn-block form-control" (click)="reindex(service)" disabled>Reindexar</button>
+                               </td>
+                        </ng-template>
+                        <ng-container *ngIf="!service.up">
+                            <td>
+                                <h4>
+                                    <span class="badge bg-danger">
+                                        Servicio Caído
+                                    </span>
+                                </h4>
+                            </td>
+                            <td><button class="btn btn-outline-info btn-block form-control" (click)="pingService()">Ping</button>
+                                <small class="text-success"
+                                *ngIf="pingTest == true">Ping exitoso</small>
+                                <small class="text-success"
+                                *ngIf="pingTest == false">Fallo ping</small>
+                            </td>
+                        </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="idToEdit == service.idService">
+                        <td>
+                            <input type="text" class="form-control" value="{{service.url}}" formControlName="url">
+                        </td>
+                        <td><select class="form-select" formControlName="protocol" value="{{service.protocol}}">
+                            <option value="REST">REST</option>
+                            <option value="SOAP">SOAP</option>
+                            </select>
+                        </td>
+                        <td>
+                        </td> 
+                        <td></td>
+                                              
+                    </ng-container>
+                    <ng-template [ngIf]="idToEdit != service.idService">
+                        <td *ngIf="idToEdit == null">
+                            <button class="btn btn-outline-info btn-block m-1" (click)="edit(service)"><fa-icon [icon]="faEdit"></fa-icon></button>
+                            <button class="btn btn-outline-info btn-block m-1" (click)="delete(service)"><fa-icon [icon]="faTrashCan"></fa-icon></button>
+                        </td>
+                        <td *ngIf="idToEdit != null">
+                            <button class="btn btn-outline-info btn-block m-1" disabled><fa-icon [icon]="faEdit"></fa-icon></button>
+                            <button class="btn btn-outline-info btn-block m-1" disabled><fa-icon [icon]="faTrashCan"></fa-icon></button>
+                        </td>
+                    </ng-template>
+                    <ng-template [ngIf]="idToEdit == service.idService">
+                        <td>
+                            <button class="btn btn-outline-info btn-block m-1" (click)="update()"><fa-icon [icon]="faCheckCircle"></fa-icon></button>
+                            <button class="btn btn-outline-info btn-block m-1" (click)="cancel()"><fa-icon [icon]="faWindowClose"></fa-icon></button>
+                        </td>
+                    </ng-template>
+                  </tr>
+             </tbody> 
+          </table>
+        </form>
+    </div>
+</div>

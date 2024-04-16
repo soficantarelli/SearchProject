@@ -1,0 +1,57 @@
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #A50048;">
+    <div class="container-fluid">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['']"><img src="assets/img/searchLogo.png" alt="Home"/></a>
+          </li>
+        </ul>
+        <div class="d-flex" *ngIf="authService.isPublic();else other_content">
+          <button class="btn btn-outline-info me-2" [routerLink]="['login']">Log in</button>
+        </div> 
+        <ng-template #other_content>
+          <div class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item" *ngIf="authService.isImpersonate()">
+              <button class="btn btn-outline-info me-2" disabled>Hola, {{authService.getUsername()}} imitando a {{authService.getUsernameImpersonate()}}</button>
+            </li>
+            <li class="nav-item" *ngIf="!authService.isImpersonate()">
+              <button class="btn btn-outline-info me-2" disabled>Hola, {{authService.getUsername()}}</button>
+            </li>
+          </div>
+          <div class="d-flex" *ngIf="authService.isImpersonate()">
+            <button class="btn btn-outline-info me-2" [routerLink]="['statistics']" routerLinkActive="active">Tablero</button>
+            <button class="btn btn-outline-info me-2" [routerLink]="['websites']" routerLinkActive="active">Sitios Web</button>
+            <button class="btn btn-outline-info me-2" [routerLink]="['services']" routerLinkActive="active">Servicios</button>
+            <button class="btn btn-outline-info me-2" [routerLink]="['metadata']" routerLinkActive="active">Metadata</button>
+            <button class="btn btn-outline-info me-2" [routerLink]="['preferences']" routerLinkActive="active">Preferencias</button>
+            <button class="btn btn-outline-info me-2" [routerLink]="['profile']" routerLinkActive="active">Profile</button>
+            <button class="btn btn-outline-info me-2" routerLinkActive="active" (click)="impersonateEnd()">Desconectar</button>
+            <button class="btn btn-outline-info me-2" [routerLink]="['/']" (click)="logOut()">Cerrar Sesion</button>
+          </div>
+        <div class="d-flex" *ngIf="authService.isAdmin() && !authService.isImpersonate()">
+          <button class="btn btn-outline-info me-2" [routerLink]="['statistics']" routerLinkActive="active">Tablero</button>
+          <button class="btn btn-outline-info me-2" [routerLink]="['users']" routerLinkActive="active">Usuarios</button>
+          <button class="btn btn-outline-info me-2" [routerLink]="['preferences']" routerLinkActive="active">Preferencias</button>
+          <button class="btn btn-outline-info me-2" [routerLink]="['profile']" routerLinkActive="active">Profile</button>
+          <button class="btn btn-outline-info me-2" [routerLink]="['/']" (click)="logOut()">Cerrar Sesion</button>
+        </div>
+        <div class="d-flex" *ngIf="authService.isCompany()">
+          <button class="btn btn-outline-info me-2" [routerLink]="['statistics']" routerLinkActive="active">Tablero</button>
+          <button class="btn btn-outline-info me-2" [routerLink]="['websites']" routerLinkActive="active">Sitios Web</button>
+          <button class="btn btn-outline-info me-2" [routerLink]="['services']" routerLinkActive="active">Servicios</button>
+          <button class="btn btn-outline-info me-2" [routerLink]="['metadata']" routerLinkActive="active">Metadata</button>
+          <button class="btn btn-outline-info me-2" [routerLink]="['preferences']" routerLinkActive="active">Preferencias</button>
+          <button class="btn btn-outline-info me-2" [routerLink]="['profile']" routerLinkActive="active">Profile</button>
+          <button class="btn btn-outline-info me-2" [routerLink]="['/']" (click)="logOut()">Cerrar Sesion</button>
+        </div>
+        <div class="d-flex" *ngIf="authService.isUser()">
+          <button class="btn btn-outline-info me-2" [routerLink]="['statistics']" routerLinkActive="active">Tablero</button>
+          <button class="btn btn-outline-info me-2" [routerLink]="['websites']" routerLinkActive="active">Sitios Web</button>
+          <button class="btn btn-outline-info me-2" [routerLink]="['services']" routerLinkActive="active">Servicios</button>
+          <button class="btn btn-outline-info me-2" [routerLink]="['metadata']" routerLinkActive="active">Metadata</button>
+          <button class="btn btn-outline-info me-2" [routerLink]="['preferences']" routerLinkActive="active">Preferencias</button>
+          <button class="btn btn-outline-info me-2" [routerLink]="['/profile']" routerLinkActive="active">Profile</button>
+          <button class="btn btn-outline-info me-2" [routerLink]="['/']" (click)="logOut()">Cerrar Sesion</button>
+        </div>
+      </ng-template>
+      </div>
+  </nav>

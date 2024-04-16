@@ -1,0 +1,94 @@
+<div class="container">
+    <div class="services">
+        <h2>Usuarios</h2>
+    </div>
+    <div class="status-service">
+        <form [formGroup]="formGroup">
+        <table class="table table-color">
+            <thead>
+              <tr>
+                <th class="col-2">Username</th>
+                <th class="col-2">Nombre</th>
+                <th class="col-2">Apellido</th>
+                <th class="col-2">Contraseña</th>
+                <th class="col-2" *ngIf="authService.isAdmin()"></th>
+                <th scope="col" style="width:10%" class="text-center"></th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr *ngIf="idToEdit == null">
+                    <td><input type="text" class="form-control" formControlName="username"></td>
+                    <td><input type="text" class="form-control" formControlName="name"></td>
+                    <td><input type="text" class="form-control" formControlName="lastName"></td>
+                    <td><input type="text" class="form-control" formControlName="password"></td>
+                    <td>
+                        <button class="btn btn-outline-info btn-block form-control" (click)="signup()">Agregar</button>
+                    </td>
+                </tr>
+                <tr *ngIf="idToEdit != null">
+                    <td><input type="text" class="form-control" disabled></td>
+                    <td><input type="text" class="form-control" disabled></td>
+                    <td><input type="text" class="form-control" disabled></td>
+                    <td><input type="text" class="form-control" disabled></td>
+              </tr>
+              <tr *ngFor="let user of listUser; let i = index">
+                <ng-container *ngIf="idToEdit != user.idUser">
+                    <td>
+                        <input type="text" class="form-control" value="{{user.username}}" disabled>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" value="{{user.name}}" disabled>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" value="{{user.lastName}}" disabled>
+                    </td>
+                    <td>
+                        <input type="password" class="form-control" value="{{user.password}}" disabled>
+                    </td>
+                </ng-container>
+                <ng-container *ngIf="idToEdit == user.idUser">
+                    <td>
+                        <input type="text" class="form-control" value="{{user.username}}" formControlName="username">
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" value="{{user.name}}" formControlName="name">
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" value="{{user.lastName}}" formControlName="lastName">
+                    </td>
+                    <td>
+                        <input type="password" class="form-control" value="{{user.password}}" disabled>
+                    </td>
+                </ng-container>
+                <ng-template [ngIf]="authService.isAdmin() && !authService.isImpersonate()">
+                    <td *ngIf="idToEdit != null">
+                        <button class="btn btn-outline-info btn-block form-control" disabled>Imitar</button>
+                    </td>
+                    <td *ngIf="idToEdit == null">
+                        <button class="btn btn-outline-info btn-block form-control" (click)="impersonate(user)">Imitar</button>
+                    </td>
+                </ng-template>
+                <ng-template [ngIf]="authService.isAdmin() && authService.isImpersonate()">
+                    <td></td>
+                </ng-template>
+                <ng-template [ngIf]="idToEdit != user.idUser">
+                    <td *ngIf="idToEdit == null">
+                        <button class="btn btn-outline-info btn-block m-1" (click)="edit(user)"><fa-icon [icon]="faEdit"></fa-icon></button>
+                        <button class="btn btn-outline-info btn-block m-1" (click)="delete(user)"><fa-icon [icon]="faTrashCan"></fa-icon></button>
+                    </td>
+                    <td *ngIf="idToEdit != null">
+                        <button class="btn btn-outline-info btn-block m-1" disabled><fa-icon [icon]="faEdit"></fa-icon></button>
+                        <button class="btn btn-outline-info btn-block m-1" disabled><fa-icon [icon]="faTrashCan"></fa-icon></button>
+                    </td>
+                </ng-template>
+                <ng-template [ngIf]="idToEdit == user.idUser">
+                    <td>
+                        <button class="btn btn-outline-info btn-block m-1" (click)="update()"><fa-icon [icon]="faCheckCircle"></fa-icon></button>
+                        <button class="btn btn-outline-info btn-block m-1" (click)="cancel()"><fa-icon [icon]="faWindowClose"></fa-icon></button>
+                    </td>
+                </ng-template>
+              </tr>
+          </table>
+        </form>
+    </div>
+</div>

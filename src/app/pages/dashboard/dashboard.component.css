@@ -1,0 +1,25 @@
+.services {
+    text-align: center;
+    margin-top: 2%;
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    width: 100%;
+}
+
+.container-card {
+    padding: 2px 16px;
+}
+
+.card-title {
+    text-align: center;
+    font-size: 2rem;
+    color: rgb(14, 195, 8);
+}
+
+.card-text{
+    text-align: end;
+    font-size: 2rem;
+    color: rgb(94, 0, 128);
+}

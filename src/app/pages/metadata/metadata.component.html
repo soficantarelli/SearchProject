@@ -1,0 +1,111 @@
+<div class="container">
+    <div class="services">
+        <h2>Metadatos</h2>
+    </div>
+    <div class="status-service">
+        <div class="row espacio mt-3">
+            <div class="col-md-10 col-12">
+                <input type="checkbox" class="ml-1 mr-4 mt-1 checkbox" [disabled]="listMetadata.length == 0"
+                    (click)="this.checked = !this.checked; selectAll()" [(ngModel)]="checked">
+                <ng-template [ngIf]="this.countSelected() > 0">
+                    <button class="btn btn-outline-success btn-sm shadow-sm mr-5" (click)="updateBatch()">
+                        {{selectApproved ? 'Actualizar' : 'Aprobar'}}
+                    </button>
+                    <button class="btn btn-outline-danger btn-sm shadow-sm" (click)="deleteBatch()">
+                        Eliminar
+                    </button>
+                </ng-template>
+            </div>
+        </div>
+        <form [formGroup]="formArray">
+        <table class="table table-color">
+            <thead>
+              <tr>
+                <th class="col-1"></th>
+                <th class="col-2">URL</th>
+                <th class="col-1">Titulo</th>
+                <th class="col-2">Texto</th>
+                <th class="col-1">Principales</th>
+                <th class="col-1">Tipo</th>
+                <th class="col-1"></th>
+                <th class="col-1">Estado</th>
+                <th scope="col-3"></th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of listMetadata; index as i" [formGroupName]="getRealIndex(data.id)">
+
+                    <td><input type="checkbox" class="checkbox" formControlName="selected"></td>
+
+                    <td>
+                        <a [href]="data.url">{{data.url}}
+                        </a>
+                    </td>
+
+                    <td>
+                       {{data.title}}
+                    </td>
+
+                    <td class="line-clamp">
+                        {{data.text}}
+                    </td>
+
+                    <td>
+                        {{data.topWords}}
+                    </td>
+
+                    <td>
+                        {{data.type}}
+                    </td>
+
+                    <td>
+                        
+                            <tag-input formControlName="tags" secondaryPlaceholder="+ Tag"
+                                [separatorKeys]="[',']" [addOnBlur]="true" [editable]="true"
+                                [modelAsStrings]="true"
+                                [ngClass]="{'disabled': (data.approved && idToEdit != getRealIndex(data.id))}"
+                                [animationDuration]="{enter: '250ms', leave: '300ms'}"
+                                theme='bootstrap'>
+                            </tag-input>
+                        
+                            <tag-input formControlName="filters" secondaryPlaceholder="+ Filtro"
+                                [separatorKeys]="[',']" [addOnBlur]="true" [editable]="true"
+                                [modelAsStrings]="true"
+                                [ngClass]="{'disabled': data.approved && idToEdit != getRealIndex(data.id)}"
+                                [animationDuration]="{enter: '250ms', leave: '300ms'}"
+                                theme='bootstrap'>
+                            </tag-input>
+                        
+                    </td>
+
+                    <td>
+                        <h6> <span class="badge"
+                            [ngClass]="data.approved ? 'bg-success' : 'bg-warning'">
+                            {{data.approved ? 'Aprobado' : 'No Aprobado'}}
+                        </span></h6>
+                    </td>
+
+                   
+                    <ng-template [ngIf]="idToEdit != getRealIndex(data.id)">
+                        <td>
+                            <button class="btn btn-outline-info btn-block" (click)="edit(data)"><fa-icon [icon]="faEdit"></fa-icon></button>
+                            <br>
+                            <button class="btn btn-outline-info btn-block" (click)="delete(data)"><fa-icon [icon]="faTrashCan"></fa-icon></button>
+                            <br>
+                            <div *ngIf="!data.approved">
+                                <button class="btn btn-outline-info btn-block" (click)="approve(data)"><fa-icon [icon]="faCheckCircle"></fa-icon></button>
+                            </div>
+                        </td>
+                    </ng-template>
+                    <ng-template [ngIf]="idToEdit == getRealIndex(data.id)">
+                        <td>
+                            <button class="btn btn-outline-info btn-block m-1" (click)="editSend(data)"><fa-icon [icon]="faCheckCircle"></fa-icon></button>
+                            <button class="btn btn-outline-info btn-block m-1" (click)="cancel(true)"><fa-icon [icon]="faWindowClose"></fa-icon></button>
+                        </td> 
+                    </ng-template>
+                </tr>     
+            </tbody> 
+          </table>
+        </form>
+    </div>
+</div>

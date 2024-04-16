@@ -1,0 +1,27 @@
+.services {
+    text-align: center;
+    margin-top: 2%;
+}
+
+.search {
+    width: 25%;
+    margin-top: 2%;
+}
+
+.search-label {
+    font-weight: bold;
+    margin-bottom: 3px;
+}
+
+.status-service {
+    margin-top: 2%;
+}
+
+.table-color {
+    background-color: #FDEEF5;
+    text-align: center;
+}
+
+th {
+    background-color: #9E4471;
+}

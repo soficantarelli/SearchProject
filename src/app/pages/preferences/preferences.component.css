@@ -1,0 +1,9 @@
+.services {
+    text-align: center;
+    margin-top: 2%;
+}
+
+label {
+    display: block;
+    margin: 10px 0;
+}

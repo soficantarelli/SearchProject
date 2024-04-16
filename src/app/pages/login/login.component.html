@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-sm-12 mx-auto">
+            <div class="mb-4 mt-4">
+                <h3 class="title">Login</h3>
+            </div>
+            <form [formGroup]="formGroup" (ngSubmit)="login()">
+                <div class="mb-4">
+                    <label for="username">Usuario</label>
+                    <input id="username" type="text" class="form-control" formControlName="username">
+                    <label
+                    *ngIf="username.invalid && username.touched && username.value == ''">Ingrese su
+                    Usuario</label>
+                </div>
+                <div class="mb">
+                    <label for="password">Contraseña</label>
+                    <input id="password" type="password" class="form-control" formControlName="password">
+                    <label *ngIf="password.invalid && password.touched">Ingrese su contraseña</label>
+                </div>
+                <div class="mb-3">
+                    <button class="btn btn-outline-info btn-block mt-4" type="submit" [disabled]="this.formGroup.invalid">Log in</button>
+                </div>
+            </form> 
+        </div>
+    </div>
+</div>
